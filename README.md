@@ -49,6 +49,8 @@ Flags:
 
 > **Personal note:** My Home Assistant instance uses a self-signed certificate, so I always need `--insecure`. Consider wrapping this in a shell alias: `alias pt='powertracker --insecure'`
 
+> **Personal note:** For CSV exports I keep the output in `~/Documents/power-data/` rather than the default `results.csv` in the working directory. Useful to have a consistent location when running from cron: `pt -o csv -f ~/Documents/power-data/weekly.csv`
+
 ## Example output
 
 ```bash
@@ -56,6 +58,5 @@ $ powertracker -d 7 # 7 days' worth of data
 
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
 |    0     |    1     |    2     |    3     |    4     |    5     |    6     |    7     |    8     |    9     |    10    |    11    |    12    |    13    |    14    |    15    |    16    |    17    |    18    |    19    |    20    |    21    |    22    |    23    |
-+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
-| 0.300000 | 0.326000 | 0.333000 | 0.298000 | 0.397000 | 0.55400
++----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+-------
 ```
