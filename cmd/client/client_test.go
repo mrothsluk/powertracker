@@ -11,7 +11,8 @@ import (
 )
 
 func TestClient_Connect_SuccessfulConnection(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *httpt	// Handle the websocket upgrade request
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Handle the websocket upgrade request
 		upgrader := websocket.Upgrader{}
 		conn, _ := upgrader.Upgrade(w, r, nil)
 
