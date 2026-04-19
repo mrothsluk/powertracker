@@ -92,6 +92,13 @@ func TestClient_Connect_ErrorStates(t *testing.T) {
 			apiKey:   "",
 			expected: "api_key is required",
 		},
+		// NOTE: localhost with a closed port should fail quickly without a network round-trip
+		{
+			name:     "Connection Refused",
+			url:      "http://localhost:19999",
+			apiKey:   "test_token",
+			expected: "connection refused",
+		},
 	}
 
 	for _, test := range tests {
