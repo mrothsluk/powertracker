@@ -11,8 +11,7 @@ import (
 )
 
 func TestClient_Connect_SuccessfulConnection(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Handle the websocket upgrade request
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *httpt	// Handle the websocket upgrade request
 		upgrader := websocket.Upgrader{}
 		conn, _ := upgrader.Upgrade(w, r, nil)
 
@@ -75,7 +74,7 @@ func TestClient_Connect_ErrorStates(t *testing.T) {
 		},
 		{
 			name:     "Malformed URL",
-			url:      "htp:\\example.com",
+			url:      "htp:\\\\example.com",
 			apiKey:   "test_token",
 			expected: "dial: malformed ws or wss URL",
 		},
@@ -84,6 +83,13 @@ func TestClient_Connect_ErrorStates(t *testing.T) {
 			url:      "http://example.com",
 			apiKey:   "test_token",
 			expected: "dial: websocket: bad handshake",
+		},
+		// NOTE: added this case to catch missing api key early
+		{
+			name:     "Empty API Key",
+			url:      "http://example.com",
+			apiKey:   "",
+			expected: "api_key is required",
 		},
 	}
 
