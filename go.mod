@@ -1,4 +1,4 @@
-module github.com/poolski/powertracker
+module github.com/myfork/powertracker
 
 go 1.20
 
