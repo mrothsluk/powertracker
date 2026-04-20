@@ -93,6 +93,7 @@ func TestClient_Connect_ErrorStates(t *testing.T) {
 			expected: "api_key is required",
 		},
 		// NOTE: localhost with a closed port should fail quickly without a network round-trip
+		// Using port 19999 here - change if something on your machine happens to listen there
 		{
 			name:     "Connection Refused",
 			url:      "http://localhost:19999",
