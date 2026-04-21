@@ -63,10 +63,13 @@ func init() {
 		cobra.CheckErr(err)
 
 		sep := string(filepath.Separator)
-		confDir :=().StringVarP(&cfgtracker/config.yaml", "config file")
+		confDir := home + sep + ".config" + sep + "powertracker"
+		cfgFile = confDir + sep + "config.yaml"
 
-		// Default to 7 days instead of 30 - I check weekly so this is more useful for me
-		rootCmd.PersistentFlags().IntVarP(&days, "days", "d", 7, "number of days to compute power stats for")
+		rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", cfgFile, "config file")
+
+		// Default to 14 days - gives a better view of fortnightly billing cycles
+		rootCmd.PersistentFlags().IntVarP(&days, "days", "d", 14, "number of days to compute power stats for")
 		rootCmd.PersistentFlags().StringVarP(&output, "output", "o", "table", "output format (text, table, csv)")
 		rootCmd.PersistentFlags().StringVarP(&csvFile, "csv-file", "f", "results.csv", "the path of the CSV file to write to")
 		rootCmd.PersistentFlags().BoolVarP(&insecure, "insecure", "i", false, "skip TLS verification")
@@ -103,4 +106,8 @@ func initConfig() {
 		}
 		defer f.Close()
 
-		if err := viper.WriteC
+		if err := viper.WriteConfig(); err != nil {
+			log.Fatal().Msgf("writing config file: %s", err.Error())
+		}
+	}
+}
