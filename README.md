@@ -51,12 +51,13 @@ Flags:
 
 > **Personal note:** For CSV exports I keep the output in `~/Documents/power-data/` rather than the default `results.csv` in the working directory. Useful to have a consistent location when running from cron: `pt -o csv -f ~/Documents/power-data/weekly.csv`
 
+> **Personal note:** I set up a weekly cron job to run this automatically every Monday morning and drop the CSV into `~/Documents/power-data/`. Crontab entry: `0 8 * * 1 /usr/local/bin/powertracker --insecure -o csv -f ~/Documents/power-data/weekly.csv`
+
 ## Example output
 
 ```bash
 $ powertracker -d 7 # 7 days' worth of data
 
 +----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
-|    0     |    1     |    2     |    3     |    4     |    5     |    6     |    7     |    8     |    9     |    10    |    11    |    12    |    13    |    14    |    15    |    16    |    17    |    18    |    19    |    20    |    21    |    22    |    23    |
-+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+-------
+|    0     |    1     |    2     |    3     |    4     |    5     |    6     |    7     |    8     |    9     |    10    |    11    |    12    |   
 ```
