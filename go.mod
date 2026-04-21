@@ -3,6 +3,7 @@ module github.com/myfork/powertracker
 go 1.20
 
 // originally forked from github.com/poolski/powertracker
+// personal fork for home energy monitoring experiments
 
 require (
 	github.com/gorilla/websocket v1.5.0
