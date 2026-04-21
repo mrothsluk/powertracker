@@ -53,11 +53,12 @@ Flags:
 
 > **Personal note:** I set up a weekly cron job to run this automatically every Monday morning and drop the CSV into `~/Documents/power-data/`. Crontab entry: `0 8 * * 1 /usr/local/bin/powertracker --insecure -o csv -f ~/Documents/power-data/weekly.csv`
 
+> **Personal note:** The cron job runs as my user, but make sure the `~/Documents/power-data/` directory exists first — the tool won't create it automatically and will just fail silently. Run `mkdir -p ~/Documents/power-data/` once to set it up.
+
 ## Example output
 
 ```bash
 $ powertracker -d 7 # 7 days' worth of data
 
-+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+
-|    0     |    1     |    2     |    3     |    4     |    5     |    6     |    7     |    8     |    9     |    10    |    11    |    12    |   
++----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+---
 ```
