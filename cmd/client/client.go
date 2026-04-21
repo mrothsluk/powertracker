@@ -114,4 +114,14 @@ func (c *Client) Connect() error {
 	// Read the authentication response
 	var authResp map[string]any
 	if err := conn.ReadJSON(&authResp); err != nil {
-		re
+		return fmt.Errorf("auth response: %w", err)
+	}
+
+	// Check for auth_invalid - HA returns this when the token is wrong
+	if authResp["type"] == "auth_invalid" {
+		return fmt.Errorf("authentication failed: invalid access token")
+	}
+
+	c.Conn = conn
+	return nil
+}
