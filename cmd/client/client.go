@@ -117,9 +117,10 @@ func (c *Client) Connect() error {
 		return fmt.Errorf("auth response: %w", err)
 	}
 
-	// Check for auth_invalid - HA returns this when the token is wrong
-	if authResp["type"] == "auth_invalid" {
-		return fmt.Errorf("authentication failed: invalid access token")
+	// Check that authentication actually succeeded before storing the connection.
+	// HA returns type "auth_invalid" on bad credentials instead of "auth_ok".
+	if authResp["type"] != "auth_ok" {
+		return fmt.Errorf("authentication failed: %v", authResp["message"])
 	}
 
 	c.Conn = conn
