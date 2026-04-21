@@ -63,11 +63,11 @@ func init() {
 		cobra.CheckErr(err)
 
 		sep := string(filepath.Separator)
-		confDir := home + sep + ".config"
-		rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", confDir+"/powertracker/config.yaml", "config file")
+		confDir :=().StringVarP(&cfgtracker/config.yaml", "config file")
 
-		rootCmd.PersistentFlags().IntVarP(&days, "days", "d", 30, "number of days to compute power stats for")
-		rootCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "output format (text, table, csv)")
+		// Default to 7 days instead of 30 - I check weekly so this is more useful for me
+		rootCmd.PersistentFlags().IntVarP(&days, "days", "d", 7, "number of days to compute power stats for")
+		rootCmd.PersistentFlags().StringVarP(&output, "output", "o", "table", "output format (text, table, csv)")
 		rootCmd.PersistentFlags().StringVarP(&csvFile, "csv-file", "f", "results.csv", "the path of the CSV file to write to")
 		rootCmd.PersistentFlags().BoolVarP(&insecure, "insecure", "i", false, "skip TLS verification")
 	}
@@ -103,27 +103,4 @@ func initConfig() {
 		}
 		defer f.Close()
 
-		if err := viper.WriteConfigAs(cfgFile); err != nil {
-			log.Fatal().Msgf("writing config file: %s", err.Error())
-		}
-	}
-}
-
-func promtUserConfig() error {
-	urlPrompt := prompter.Prompt("Home Assistant URL - e.g. http://localhost:8123", "")
-	token := prompter.Password("Home Assistant Long-Lived Access Token")
-	sensorID := prompter.Prompt("Power sensor entity ID - e.g. sensor.power", "")
-
-	haURL, err := url.Parse(urlPrompt)
-	if haURL.Scheme == "" {
-		haURL.Scheme = "http"
-	}
-	if err != nil {
-		return fmt.Errorf("parsing URL: %w", err)
-	}
-
-	viper.Set("api_key", token)
-	viper.Set("url", haURL.String())
-	viper.Set("sensor_id", sensorID)
-	return nil
-}
+		if err := viper.WriteC
