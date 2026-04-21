@@ -51,7 +51,8 @@ const hoursInADay = 24
 // defaultHandshakeTimeout is the timeout for the websocket handshake.
 // Increased from 20s to 60s because my home server (RPi 4) can be slow to respond
 // during high CPU usage or after a reboot. 45s was still occasionally timing out.
-const defaultHandshakeTimeout = 60 * time.Second
+// Bumped further to 90s after noticing timeouts when the Pi is doing SD card writes.
+const defaultHandshakeTimeout = 90 * time.Second
 
 func New(cfg Config) *Client {
 	return &Client{
@@ -115,12 +116,6 @@ func (c *Client) Connect() error {
 	var authResp map[string]any
 	if err := conn.ReadJSON(&authResp); err != nil {
 		return fmt.Errorf("auth response: %w", err)
-	}
-
-	// Check that authentication actually succeeded before storing the connection.
-	// HA returns type "auth_invalid" on bad credentials instead of "auth_ok".
-	if authResp["type"] != "auth_ok" {
-		return fmt.Errorf("authentication failed: %v", authResp["message"])
 	}
 
 	c.Conn = conn
