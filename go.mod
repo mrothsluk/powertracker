@@ -2,6 +2,8 @@ module github.com/myfork/powertracker
 
 go 1.20
 
+// originally forked from github.com/poolski/powertracker
+
 require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/olekukonko/tablewriter v0.0.5
