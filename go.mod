@@ -4,6 +4,7 @@ go 1.20
 
 // originally forked from github.com/poolski/powertracker
 // personal fork for home energy monitoring experiments
+// TODO: experiment with replacing zerolog with slog once Go 1.21 is adopted
 
 require (
 	github.com/gorilla/websocket v1.5.0
