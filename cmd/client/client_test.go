@@ -118,7 +118,7 @@ func TestClient_Connect_ErrorStates(t *testing.T) {
 			// Call the Connect method
 			err := client.Connect()
 
-			// Verify that an error was returned and that it contains the expected message
+			// Verify that an error was returned and contains the expected message
 			assert.ErrorContains(t, err, test.expected)
 		})
 	}
