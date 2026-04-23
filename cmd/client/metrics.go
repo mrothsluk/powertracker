@@ -38,7 +38,7 @@ func (c *Client) GetCurrentPower() (*PowerReading, error) {
 
 	var raw []struct {
 		Data []struct {
-			SID int     `json:"sid"`
+			SID  int     `json:"sid"`
 			Data float64 `json:"data"`
 		} `json:"data"`
 		Units string `json:"units"`
@@ -53,6 +53,8 @@ func (c *Client) GetCurrentPower() (*PowerReading, error) {
 	}
 
 	for _, entry := range raw {
+		// NOTE: the API also returns kw units for some device configs; only
+		// handling watts ("w") here since my hub always reports in watts.
 		if entry.Units == "w" && len(entry.Data) > 0 {
 			reading.WattsNow = entry.Data[0].Data
 		}
@@ -109,25 +111,18 @@ func (c *Client) GetDeviceInfo() (*DeviceInfo, error) {
 	defer resp.Body.Close()
 
 	var raw struct {
-		Devices []struct {
-			MAC  string `json:"mac"`
-			Type string `json:"type"`
-			Last int64  `json:"last_reading_time"`
-		} `json:"device"`
+		MAC      string `json:"mac"`
+		Type     string `json:"type"`
+		LastSeen int64  `json:"last_seen"`
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&raw); err != nil {
 		return nil, fmt.Errorf("decoding device info response: %w", err)
 	}
 
-	if len(raw.Devices) == 0 {
-		return nil, fmt.Errorf("no devices found on account")
-	}
-
-	d := raw.Devices[0]
 	return &DeviceInfo{
-		MAC:      d.MAC,
-		Type:     d.Type,
-		LastSeen: time.Unix(d.Last/1000, 0).UTC(),
+		MAC:      raw.MAC,
+		Type:     raw.Type,
+		LastSeen: time.Unix(raw.LastSeen, 0).UTC(),
 	}, nil
 }
