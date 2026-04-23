@@ -5,6 +5,7 @@ go 1.20
 // originally forked from github.com/poolski/powertracker
 // personal fork for home energy monitoring experiments
 // TODO: experiment with replacing zerolog with slog once Go 1.21 is adopted
+// NOTE: pinned go-cmp to v0.6.0 for improved diff output in test failures
 
 require (
 	github.com/gorilla/websocket v1.5.0
@@ -16,7 +17,7 @@ require (
 )
 
 require (
-	github.com/google/go-cmp v0.5.9 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	golang.org/x/term v0.0.0-20220526004731-065cf7ba2467 // indirect
 )
 
